@@ -39,5 +39,5 @@ static BigInteger Gcd(BigInteger a, BigInteger b)
 
 static BigInteger Lcm(BigInteger a, BigInteger b)
 {
-    return a * b > 0 ? a * b: -a * b / Gcd(a, b);
+    return (a * b > 0 ? a * b: -a * b) / Gcd(a, b);
 }
