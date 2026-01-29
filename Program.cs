@@ -1,3 +1,5 @@
+using System.Numerics;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
@@ -17,25 +19,25 @@ app.UseHttpsRedirection();
 app.MapGet("/simerkish_gmail_com", (HttpRequest request) =>
 {
     const string errorMessage = "NaN";
-    if (!Int32.TryParse(request.Query["x"], out int x)) return errorMessage;
-    if (!Int32.TryParse(request.Query["y"], out int y)) return errorMessage;
+    if (!BigInteger.TryParse(request.Query["x"], out BigInteger x)) return errorMessage;
+    if (!BigInteger.TryParse(request.Query["y"], out BigInteger y)) return errorMessage;
     return Lcm(x, y).ToString();
 }); 
 
 app.Run();
 
-static long Gcd(long a, long b)
+static BigInteger Gcd(BigInteger a, BigInteger b)
 {
     while (b != 0)
     {
-        long temp = b;
+        BigInteger temp = b;
         b = a % b;
         a = temp;
     }
     return a;
 }
 
-static long Lcm(int a, int b)
+static BigInteger Lcm(BigInteger a, BigInteger b)
 {
-    return Math.Abs((long)a * b) / Gcd(a, b);
+    return a * b > 0 ? a * b: -a * b / Gcd(a, b);
 }
